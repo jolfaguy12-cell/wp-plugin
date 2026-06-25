@@ -73,6 +73,18 @@ function chatwoot_load() {
   wp_localize_script('chatwoot-client', 'chatwoot_widget_type', $chatwoot_widget_type);
   wp_localize_script('chatwoot-client', 'chatwoot_launcher_text', $chatwoot_launcher_text);
   wp_localize_script('chatwoot-client', 'chatwoot_widget_position', $chatwoot_widget_position);
+
+  // Behdashtik Visitor Journey Tracking module — DEV only.
+  // Loads after the Chatwoot widget and records page visits as private notes.
+  if ( $chatwoot_url && strpos( home_url(), 'dev.behdashtik.ir' ) !== false ) {
+    wp_enqueue_script(
+      'behdashtik-journey-tracker',
+      $chatwoot_url . '/js/behdashtik-journey-tracker.js',
+      array( 'chatwoot-client' ),
+      null,
+      true
+    );
+  }
 }
 
 add_action('admin_menu', 'chatwoot_setup_menu');
